@@ -9,7 +9,7 @@
 	},
 	"id": "geode.texture-loader",
 	"name": "Texture Loader",
-	"developer": "Geode Team",
+	"developers": ["Geode Team","Kventarix"],
 	"description": "Texture Pack Manager",
 	"early-load": true,
 	"resources": {
