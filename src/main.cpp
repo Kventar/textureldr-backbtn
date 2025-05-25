@@ -71,8 +71,6 @@ class $modify(MyMenuLayer, MenuLayer) {
         if (!MenuLayer::init())
             return false;
 
-        if (Mod::get()->getSavedValue<bool>("shown-moved-alert")) return true;
-
         NodeIDs::provideFor(this);
 
         auto menu = this->getChildByID("right-side-menu");
@@ -89,21 +87,6 @@ class $modify(MyMenuLayer, MenuLayer) {
     }
 
     void onTextureLdr(CCObject*) {
-        bool isDesktop = false;
-        #ifdef GEODE_IS_DESKTOP
-        isDesktop = true;
-        #endif
-        // Prompt where the button is relocated, since many mobile users use the high graphics mod, we want to direct them to the right place still.
-        if (isDesktop || Loader::get()->isModLoaded("weebify.high-graphics-android")) {
-            createQuickPopup("Woah!", "Texture Loader has been moved into <cb>Graphics Settings</c>, go to graphics settings and click the <cg>Textures</c> button to manage your Texture Packs!", "I UNDERSTAND", nullptr, [] (FLAlertLayer*, bool selected) {
-                Mod::get()->setSavedValue("shown-moved-alert", true);
-            }, true);
-        }
-        else {
-            createQuickPopup("Woah!", "Texture Loader has been moved into <cb>Settings</c>, go to settings and click the <cg>Textures</c> button to manage your Texture Packs!", "I UNDERSTAND", nullptr, [] (FLAlertLayer*, bool selected) {
-                Mod::get()->setSavedValue("shown-moved-alert", true);
-            }, true);
-        }
+        PackSelectPopup::create()->show();
     }
 };
-
