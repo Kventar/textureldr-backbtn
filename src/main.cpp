@@ -5,6 +5,7 @@
 #include <Geode/modify/OptionsLayer.hpp>
 #include <Geode/modify/IDManager.hpp>
 #include <Geode/ui/BasedButtonSprite.hpp>
+#include "Tutorial.hpp"
 
 using namespace geode::prelude;
 
@@ -19,9 +20,14 @@ class $modify(MyOptionsLayer, OptionsLayer) {
         if (CCNode* optionsMenu = m_mainLayer->getChildByID("options-menu")) {
             if (optionsMenu->getChildByID("graphics-button")) return;
 
-            ButtonSprite* buttonSprite = ButtonSprite::create("Textures", 130, true, "goldFont.fnt", "GJ_button_01.png", 32, 1);
+            auto* buttonSprite = ButtonSprite::create("Textures", 130, true, "goldFont.fnt", "GJ_button_01.png", 32, 1);
 
-            CCMenuItemSpriteExtra* textureLoaderBtn = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyOptionsLayer::onTextureLdr));
+            auto* textureLoaderBtn = CCMenuItemSpriteExtra::create(
+                buttonSprite,
+                this,
+                menu_selector(MyOptionsLayer::onTextureLdr)
+            );
+            textureLoaderBtn->setID("texture-loader-button"_spr);
 
             if (CCNode* optionsButton = optionsMenu->getChildByID("options-button")) {
                 optionsMenu->insertAfter(textureLoaderBtn, optionsButton);
@@ -42,12 +48,16 @@ class $modify(MyVideoOptionsLayer, VideoOptionsLayer) {
         if (!VideoOptionsLayer::init()) return false;
 
         for (CCNode* child : CCArrayExt<CCNode*>(m_buttonMenu->getChildren())) {
-            if (CCMenuItemSpriteExtra* btn = typeinfo_cast<CCMenuItemSpriteExtra*>(child)) {
-                if (ButtonSprite* btnSpr = btn->getChildByType<ButtonSprite*>(0)) {
+            if (auto* btn = typeinfo_cast<CCMenuItemSpriteExtra*>(child)) {
+                if (auto* btnSpr = btn->getChildByType<ButtonSprite*>(0)) {
                     if (std::string_view(btnSpr->m_label->getString()) == "Advanced") {
-                        ButtonSprite* buttonSprite = ButtonSprite::create("Textures", 60, true, "goldFont.fnt", "GJ_button_04.png", 25, 0.5f);
+                        auto* buttonSprite = ButtonSprite::create("Textures", 60, true, "goldFont.fnt", "GJ_button_04.png", 25, 0.5f);
 
-                        CCMenuItemSpriteExtra* textureLoaderBtn = CCMenuItemSpriteExtra::create(buttonSprite, this, menu_selector(MyVideoOptionsLayer::onTextureLdr));
+                        auto* textureLoaderBtn = CCMenuItemSpriteExtra::create(
+                            buttonSprite,
+                            this,
+                            menu_selector(MyVideoOptionsLayer::onTextureLdr)
+                        );
                         textureLoaderBtn->setID("texture-loader-button"_spr);
 
                         textureLoaderBtn->setPositionX(btn->getPositionX());
