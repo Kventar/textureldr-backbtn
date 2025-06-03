@@ -2,7 +2,7 @@
 #include <Geode/modify/CCMouseDispatcher.hpp>
 
 #ifndef GEODE_IS_IOS
-// a bit hacky but allows for multiple scroll layers at onces
+// a bit hacky but allows for multiple scroll layers at once
 class $modify(CCMouseDispatcher) {
 	bool dispatchScrollMSG(float x, float y) {
         for (CCMouseHandler* handler : CCArrayExt<CCMouseHandler*>(m_pMouseHandlers)) {
